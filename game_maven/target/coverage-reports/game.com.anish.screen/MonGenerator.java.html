@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MonGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mygame</a> &gt; <a href="index.source.html" class="el_package">game.com.anish.screen</a> &gt; <span class="el_source">MonGenerator.java</span></div><h1>MonGenerator.java</h1><pre class="source lang-java linenums">package game.com.anish.screen;
+
+import java.awt.Color;
+import java.io.Serializable;
+
+import game.com.anish.calabashbros.Calabash;
+import game.com.anish.calabashbros.Monster;
+import game.com.anish.calabashbros.World;
+
+public class MonGenerator implements Runnable, Serializable {
+    
+    private static final long serialVersionUID = 9L;
+    private World world;
+    private Calabash bro;
+    private Color[] colors;
+<span class="nc" id="L16">    private boolean isPaused = false;</span>
+
+<span class="nc" id="L18">    public MonGenerator(World world, Calabash bro) {</span>
+<span class="nc" id="L19">        this.world = world;</span>
+<span class="nc" id="L20">        this.bro = bro;</span>
+<span class="nc" id="L21">        colors = new Color[7];</span>
+<span class="nc" id="L22">        colors[0] = new Color(204, 0, 0);</span>
+<span class="nc" id="L23">        colors[1] = new Color(255, 165, 0);</span>
+<span class="nc" id="L24">        colors[2] = new Color(252, 233, 79);</span>
+<span class="nc" id="L25">        colors[3] = new Color(78, 154, 6);</span>
+<span class="nc" id="L26">        colors[4] = new Color(50, 175, 255);</span>
+<span class="nc" id="L27">        colors[5] = new Color(114, 159, 207);</span>
+<span class="nc" id="L28">        colors[6] = new Color(173, 127, 168);</span>
+<span class="nc" id="L29">    }</span>
+
+    public void setPause() {
+<span class="nc" id="L32">        isPaused = true;</span>
+<span class="nc" id="L33">    }</span>
+
+    public void run() {
+        while(true) {
+<span class="nc bnc" id="L37" title="All 4 branches missed.">            if(bro.isDead() || bro.getScore() &gt;= 2000) {</span>
+<span class="nc" id="L38">                return;</span>
+            }
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            while(isPaused) {</span>
+<span class="nc" id="L41">                try {wait(); }</span>
+<span class="nc" id="L42">                catch(InterruptedException e) {</span>
+<span class="nc" id="L43">                    e.printStackTrace();</span>
+<span class="nc" id="L44">                }</span>
+            }
+            try {
+<span class="nc" id="L47">                Thread.sleep(1000);</span>
+            }
+<span class="nc" id="L49">            catch(InterruptedException e) {</span>
+
+<span class="nc" id="L51">            }</span>
+            Monster mon;
+<span class="nc" id="L53">            int level = 0;</span>
+<span class="nc" id="L54">            double ra = Math.random();</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if(bro.getScore() &lt;= 200) {</span>
+<span class="nc" id="L56">                level = (int)(ra * 2);</span>
+            }
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            else if(bro.getScore() &lt;= 600) {</span>
+<span class="nc" id="L59">                level = (int)(ra * 4);</span>
+            }
+            else {
+<span class="nc" id="L62">                level = (int)(ra * 7);</span>
+            }
+<span class="nc" id="L64">            double d = Math.random();</span>
+<span class="nc" id="L65">            int row = (int)(d * 18);</span>
+<span class="nc" id="L66">            int dir = (int)(d * 2);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if(dir == 0) {</span>
+<span class="nc" id="L68">                mon = new Monster(colors[level], world, level, false, bro);</span>
+<span class="nc" id="L69">                world.put(mon, 0, row+2);</span>
+            }
+            else {
+<span class="nc" id="L72">                mon = new Monster(colors[level], world, level, true, bro);</span>
+<span class="nc" id="L73">                world.put(mon, World.WIDTH - 1, row+2);</span>
+            }
+<span class="nc" id="L75">            new Thread(mon).start();</span>
+<span class="nc" id="L76">        }</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

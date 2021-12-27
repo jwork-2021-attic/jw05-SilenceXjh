@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mygame</a> &gt; <a href="index.source.html" class="el_package">game</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package game;
+
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+
+import game.asciiPanel.AsciiFont;
+import game.asciiPanel.AsciiPanel;
+import javafx.event.ActionEvent;
+
+import game.com.anish.calabashbros.World;
+import game.com.anish.screen.Screen;
+import game.com.anish.screen.WorldScreen;
+
+public class Main extends JFrame implements KeyListener{
+
+    private AsciiPanel terminal;
+    private JButton newgameButton;
+    private JButton continueButton;
+    private JButton playbackButton;
+    private JPanel panel;
+    private Screen screen;
+
+    public Main() {
+<span class="nc" id="L36">        super();</span>
+<span class="nc" id="L37">        panel = new JPanel();</span>
+<span class="nc" id="L38">        this.setSize(200, 200);</span>
+<span class="nc" id="L39">        newgameButton = new JButton(&quot;start new game&quot;);</span>
+<span class="nc" id="L40">        newgameButton.addActionListener(new StartGameAction(this));</span>
+<span class="nc" id="L41">        playbackButton = new JButton(&quot;watch playback&quot;);</span>
+<span class="nc" id="L42">        playbackButton.addActionListener(new PlaybackAction(this));</span>
+<span class="nc" id="L43">        panel.add(newgameButton);</span>
+<span class="nc" id="L44">        panel.add(playbackButton);</span>
+<span class="nc" id="L45">        add(panel);</span>
+
+        //add(terminal);
+        //pack();
+        //screen = new WorldScreen();
+        //addKeyListener(this);
+        //repaint();
+        //new Thread(new Refresh(this)).start();
+<span class="nc" id="L53">    }</span>
+
+    public JPanel getPanel() {
+<span class="nc" id="L56">        return panel;</span>
+    }
+
+    public void startGame() {
+<span class="nc" id="L60">        File file = new File(&quot;log.txt&quot;);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if(file.exists()) {</span>
+<span class="nc" id="L62">            file.delete();</span>
+        }
+<span class="nc" id="L64">        terminal = new AsciiPanel(World.WIDTH, World.HEIGHT, AsciiFont.TALRYTH_32_32);</span>
+<span class="nc" id="L65">        add(terminal);</span>
+<span class="nc" id="L66">        pack();</span>
+<span class="nc" id="L67">        this.setFocusable(true);</span>
+<span class="nc" id="L68">        this.requestFocus();</span>
+<span class="nc" id="L69">        this.requestFocusInWindow();</span>
+<span class="nc" id="L70">        addKeyListener(this);</span>
+<span class="nc" id="L71">        screen = new WorldScreen();</span>
+<span class="nc" id="L72">        repaint();</span>
+<span class="nc" id="L73">        new Thread(new Refresh(this)).start();</span>
+<span class="nc" id="L74">    }</span>
+
+    public void playback() {
+<span class="nc" id="L77">        terminal = new AsciiPanel(World.WIDTH, World.HEIGHT, AsciiFont.TALRYTH_32_32);</span>
+<span class="nc" id="L78">        add(terminal);</span>
+<span class="nc" id="L79">        pack();</span>
+<span class="nc" id="L80">        File file = new File(&quot;log.txt&quot;);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if(!file.exists()) {</span>
+<span class="nc" id="L82">            return;</span>
+        }
+        //screen = new WorldScreen();
+        //repaint();
+<span class="nc" id="L86">        new Thread(new RefreshLog(this)).start();</span>
+<span class="nc" id="L87">    }</span>
+
+    public Screen getScreen() {
+<span class="nc" id="L90">        return screen;</span>
+    }
+    
+    public void setScreen(Screen screen) {
+<span class="nc" id="L94">        this.screen = screen;</span>
+<span class="nc" id="L95">    }</span>
+
+    @Override
+    public void repaint() {
+<span class="nc" id="L99">        terminal.clear();</span>
+<span class="nc" id="L100">        screen.displayOutput(terminal);</span>
+<span class="nc" id="L101">        super.repaint();</span>
+<span class="nc" id="L102">    }</span>
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+<span class="nc" id="L107">    }</span>
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //System.out.println(&quot;key&quot;);
+<span class="nc" id="L112">        screen = screen.respondToUserInput(e);</span>
+<span class="nc" id="L113">        repaint();</span>
+<span class="nc" id="L114">    }</span>
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+<span class="nc" id="L119">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L122">        Main app = new Main();</span>
+<span class="nc" id="L123">        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L124">        app.setVisible(true);</span>
+<span class="nc" id="L125">    }</span>
+
+}
+
+class StartGameAction implements ActionListener {
+
+    private Main M;
+
+<span class="nc" id="L133">    public StartGameAction(Main M) {</span>
+<span class="nc" id="L134">        this.M = M;</span>
+<span class="nc" id="L135">    }</span>
+
+    @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L139">        M.remove(M.getPanel());</span>
+<span class="nc" id="L140">        M.startGame();</span>
+<span class="nc" id="L141">    }</span>
+
+}
+
+class PlaybackAction implements ActionListener {
+
+    private Main M;
+
+<span class="nc" id="L149">    public PlaybackAction(Main M) {</span>
+<span class="nc" id="L150">        this.M = M;</span>
+<span class="nc" id="L151">    }</span>
+
+    @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L155">        M.remove(M.getPanel());</span>
+<span class="nc" id="L156">        M.playback();</span>
+<span class="nc" id="L157">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

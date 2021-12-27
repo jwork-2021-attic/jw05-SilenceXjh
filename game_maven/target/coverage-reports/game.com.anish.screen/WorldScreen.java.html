@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WorldScreen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mygame</a> &gt; <a href="index.source.html" class="el_package">game.com.anish.screen</a> &gt; <span class="el_source">WorldScreen.java</span></div><h1>WorldScreen.java</h1><pre class="source lang-java linenums">package game.com.anish.screen;
+
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.io.Serializable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import game.asciiPanel.AsciiPanel;
+import game.com.anish.calabashbros.*;
+
+public class WorldScreen implements Screen, Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private World world;
+    private Calabash bro;
+    private MonGenerator mongen;
+<span class="nc" id="L18">    private boolean isPaused = false;</span>
+
+<span class="nc" id="L20">    public WorldScreen() {</span>
+<span class="nc" id="L21">        world = new World();</span>
+
+<span class="nc" id="L23">        bro = new Calabash(new Color(204, 0, 0), world);</span>
+
+<span class="nc" id="L25">        world.put(bro, 10, 11);</span>
+
+<span class="nc" id="L27">        mongen = new MonGenerator(world, bro);</span>
+
+<span class="nc" id="L29">        new Thread(bro).start();</span>
+
+        //new Thread(new MonGenerator(world, bro)).start();
+<span class="nc" id="L32">        new Thread(mongen).start();</span>
+
+<span class="nc" id="L34">    }</span>
+
+    @Override
+    public void displayOutput(AsciiPanel terminal) {
+
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (int x = 0; x &lt; World.WIDTH; x++) {</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            for (int y = 0; y &lt; World.HEIGHT; y++) {</span>
+
+<span class="nc" id="L42">                terminal.write(world.get(x, y).getGlyph(), x, y, world.get(x, y).getColor());</span>
+
+            }
+        }
+<span class="nc" id="L46">    }</span>
+
+    @Override
+    public Screen respondToUserInput(KeyEvent key) {
+
+        //System.out.println(&quot;respond&quot;);
+
+        //judgePause(key);
+
+<span class="nc" id="L55">        bro.setKey(key);</span>
+
+<span class="nc" id="L57">        return this;</span>
+    }
+
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

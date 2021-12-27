@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AsciiFont.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mygame</a> &gt; <a href="index.source.html" class="el_package">game.asciiPanel</a> &gt; <span class="el_source">AsciiFont.java</span></div><h1>AsciiFont.java</h1><pre class="source lang-java linenums">package game.asciiPanel;
+
+import java.io.Serializable;
+
+/**
+ * This class holds provides all available Fonts for the AsciiPanel. Some
+ * graphics are from the Dwarf Fortress Tileset Wiki Page
+ * 
+ * @author zn80
+ *
+ */
+public class AsciiFont implements Serializable {
+
+<span class="nc" id="L14">    public static final AsciiFont CP437_9x16 = new AsciiFont(&quot;game/resources/cp437_9x16.png&quot;, 9, 16);</span>
+<span class="nc" id="L15">    public static final AsciiFont TALRYTH_15_15 = new AsciiFont(&quot;game/resources/talryth_square_15x15.png&quot;, 15, 15);</span>
+<span class="nc" id="L16">    public static final AsciiFont TALRYTH_32_32 = new AsciiFont(&quot;game/resources/talryth_square_32x32.png&quot;, 32, 32);</span>
+<span class="nc" id="L17">    public static final AsciiFont FLOOR = new AsciiFont(&quot;game/resources/floor.png&quot;, 32, 32);</span>
+<span class="nc" id="L18">    public static final AsciiFont BRO1 = new AsciiFont(&quot;game/resources/bro1.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L19">    public static final AsciiFont BRO2 = new AsciiFont(&quot;game/resources/bro2.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L20">    public static final AsciiFont BRO3 = new AsciiFont(&quot;game/resources/bro3.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L21">    public static final AsciiFont BRO4 = new AsciiFont(&quot;game/resources/bro4.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L22">    public static final AsciiFont BRO5 = new AsciiFont(&quot;game/resources/bro5.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L23">    public static final AsciiFont BRO6 = new AsciiFont(&quot;game/resources/bro6.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L24">    public static final AsciiFont BRO7 = new AsciiFont(&quot;game/resources/bro7.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L25">    public static final AsciiFont BRO8 = new AsciiFont(&quot;game/resources/bro8.jpg&quot;, 32, 32);</span>
+<span class="nc" id="L26">    public static final AsciiFont MON1 = new AsciiFont(&quot;game/resources/mon1.png&quot;, 32, 32);</span>
+<span class="nc" id="L27">    public static final AsciiFont MON2 = new AsciiFont(&quot;game/resources/mon2.png&quot;, 32, 32);</span>
+<span class="nc" id="L28">    public static final AsciiFont MON3 = new AsciiFont(&quot;game/resources/mon3.png&quot;, 32, 32);</span>
+<span class="nc" id="L29">    public static final AsciiFont MON4 = new AsciiFont(&quot;game/resources/mon4.png&quot;, 32, 32);</span>
+<span class="nc" id="L30">    public static final AsciiFont MON5 = new AsciiFont(&quot;game/resources/mon5.png&quot;, 32, 32);</span>
+<span class="nc" id="L31">    public static final AsciiFont MON6 = new AsciiFont(&quot;game/resources/mon6.png&quot;, 32, 32);</span>
+<span class="nc" id="L32">    public static final AsciiFont MON7 = new AsciiFont(&quot;game/resources/mon7.png&quot;, 32, 32);</span>
+
+    private String fontFilename;
+
+    public String getFontFilename() {
+<span class="nc" id="L37">        return fontFilename;</span>
+    }
+
+    private int width;
+
+    public int getWidth() {
+<span class="nc" id="L43">        return width;</span>
+    }
+
+    private int height;
+
+    public int getHeight() {
+<span class="nc" id="L49">        return height;</span>
+    }
+
+<span class="nc" id="L52">    public AsciiFont(String filename, int width, int height) {</span>
+<span class="nc" id="L53">        this.fontFilename = filename;</span>
+<span class="nc" id="L54">        this.width = width;</span>
+<span class="nc" id="L55">        this.height = height;</span>
+<span class="nc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
